@@ -13,3 +13,13 @@ __pycache__/
 # macOS system files
 .DS_Store
 
+# Max/Ableton clutter
+*.maxbackup
+*.asd
+*.bak
+
+# Local staging area (what Live/Max sees)
+max/staging/
+!max/staging/.gitkeep
+
+
