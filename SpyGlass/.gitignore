@@ -1,0 +1,65 @@
+# Max/MSP specific
+*.mxo
+*.mxe
+*.mxe64
+.DS_Store
+
+# Max backup files
+*.maxhelp
+*.maxpat.orig
+*.maxhelp.orig
+
+# Max preferences and caches
+*/preferences/
+*/cache/
+
+# Max for Live specific
+*.amxd.orig
+*.alp.orig
+
+# System files
+Thumbs.db
+Desktop.ini
+.Spotlight-V100
+.Trashes
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+~*
+
+# Build artifacts
+build/
+dist/
+
+# IDE specific
+.vscode/
+.idea/
+*.sublime-*
+
+# Node modules (if using any Max/Node integration)
+node_modules/
+
+# Python virtual environments (if using py~ or similar)
+venv/
+env/
+*.pyc
+__pycache__/
+
+# Audio/Video cache (large files)
+*.wav.cache
+*.aif.cache
+*.mp3.cache
+
+# Large media files (optional - uncomment if you want to exclude)
+# *.wav
+# *.aif
+# *.mp3
+# *.mp4
+# *.mov
+
+# But DO include your test images
+!images/
+!*.jpg
+!*.png

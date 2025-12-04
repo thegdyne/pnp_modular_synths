@@ -1,0 +1,69 @@
+#!/bin/bash
+
+# install_maxpat - Copy the most recently downloaded .maxpat file to current directory
+# Usage: install_maxpat [destination_name]
+
+# Colors for output
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+
+# Find Downloads folder
+DOWNLOADS="$HOME/Downloads"
+
+if [ ! -d "$DOWNLOADS" ]; then
+    echo -e "${RED}Error: Downloads folder not found at $DOWNLOADS${NC}"
+    exit 1
+fi
+
+# Find the most recent .maxpat file
+LATEST_MAXPAT=$(find "$DOWNLOADS" -maxdepth 1 -name "*.maxpat" -type f -print0 | xargs -0 ls -t | head -n 1)
+
+if [ -z "$LATEST_MAXPAT" ]; then
+    echo -e "${RED}Error: No .maxpat files found in $DOWNLOADS${NC}"
+    exit 1
+fi
+
+# Get the filename
+FILENAME=$(basename "$LATEST_MAXPAT")
+
+# Determine destination name
+if [ -n "$1" ]; then
+    # User provided a custom name
+    DEST_NAME="$1"
+    # Add .maxpat extension if not present
+    if [[ "$DEST_NAME" != *.maxpat ]]; then
+        DEST_NAME="${DEST_NAME}.maxpat"
+    fi
+else
+    # Use original filename
+    DEST_NAME="$FILENAME"
+fi
+
+# Check if file already exists
+if [ -f "$DEST_NAME" ]; then
+    echo -e "${YELLOW}Warning: $DEST_NAME already exists in current directory${NC}"
+    read -p "Overwrite? (y/n) " -n 1 -r
+    echo
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        echo "Aborted."
+        exit 0
+    fi
+fi
+
+# Copy the file
+cp "$LATEST_MAXPAT" "$DEST_NAME"
+
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}✓ Installed: $FILENAME${NC}"
+    echo -e "  Source: $LATEST_MAXPAT"
+    echo -e "  Destination: $(pwd)/$DEST_NAME"
+    
+    # Show file modification time
+    MOD_TIME=$(stat -f "%Sm" -t "%Y-%m-%d %H:%M:%S" "$LATEST_MAXPAT" 2>/dev/null || stat -c "%y" "$LATEST_MAXPAT" 2>/dev/null | cut -d. -f1)
+    echo -e "  Downloaded: $MOD_TIME"
+else
+    echo -e "${RED}Error: Failed to copy file${NC}"
+    exit 1
+fi
