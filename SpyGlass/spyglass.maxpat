@@ -210,7 +210,7 @@
                     "numinlets": 2,
                     "numoutlets": 1,
                     "outlettype": [ "" ],
-                    "patching_rect": [ 400.0, 145.0, 94.0, 22.0 ],
+                    "patching_rect": [ 400.0, 145.0, 115.0, 22.0 ],
                     "text": "pak 0 0 @triggers 1 1"
                 }
             },
@@ -227,12 +227,23 @@
             },
             {
                 "box": {
+                    "id": "obj-39",
+                    "maxclass": "newobj",
+                    "numinlets": 1,
+                    "numoutlets": 1,
+                    "outlettype": [ "int" ],
+                    "patching_rect": [ 550.0, 110.0, 27.0, 22.0 ],
+                    "text": "ftoi"
+                }
+            },
+            {
+                "box": {
                     "id": "obj-42",
                     "maxclass": "message",
                     "numinlets": 2,
                     "numoutlets": 1,
                     "outlettype": [ "" ],
-                    "patching_rect": [ 550.0, 110.0, 61.0, 22.0 ],
+                    "patching_rect": [ 550.0, 145.0, 61.0, 22.0 ],
                     "text": "dim $1 $1"
                 }
             },
@@ -294,9 +305,15 @@
             },
             {
                 "patchline": {
-                    "destination": [ "obj-42", 0 ],
+                    "destination": [ "obj-39", 0 ],
                     "order": 0,
                     "source": [ "obj-12", 1 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-42", 0 ],
+                    "source": [ "obj-39", 0 ]
                 }
             },
             {
